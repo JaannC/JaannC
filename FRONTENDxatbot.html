@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xatbot</title>
+    <style>
+        /* Estils bàsics per al widget de xat */
+        #chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            display: none;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #chatbot-header {
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        #chatbot-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        #chatbot-input {
+            width: 100%;
+            border: none;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+        #chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatbot-icon">💬</div>
+    <div id="chatbot-container">
+        <div id="chatbot-header">Xatbot</div>
+        <div id="chatbot-messages"></div>
+        <input type="text" id="chatbot-input" placeholder="Escriu un missatge...">
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const chatIcon = document.getElementById("chatbot-icon");
+            const chatContainer = document.getElementById("chatbot-container");
+            const chatHeader = document.getElementById("chatbot-header");
+            const chatMessages = document.getElementById("chatbot-messages");
+            const chatInput = document.getElementById("chatbot-input");
+
+            // URL del backend exposat amb ngrok
+            const API_URL = "https://783b-34-133-188-52.ngrok-free.app/chat"; // ⬅️ Substitueix per la teva URL de ngrok
+
+            // Funció per obrir/tancar el xatbot
+            function toggleChatbot() {
+                if (chatContainer.style.display === "block") {
+                    chatContainer.style.display = "none";
+                    chatIcon.style.display = "block";
+                } else {
+                    chatContainer.style.display = "block";
+                    chatIcon.style.display = "none";
+                }
+            }
+
+            // Assignar els esdeveniments de clic
+            chatIcon.addEventListener("click", toggleChatbot);
+            chatHeader.addEventListener("click", toggleChatbot);
+
+            // Detectar tecla "Enter" per enviar missatge
+            chatInput.addEventListener("keypress", function (event) {
+                if (event.key === "Enter") sendMessage();
+            });
+
+            function sendMessage() {
+                const message = chatInput.value.trim();
+                if (!message) return;
+
+                chatMessages.innerHTML += `<div><strong>Tu:</strong> ${message}</div>`;
+                chatInput.value = "";
+
+                fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    chatMessages.innerHTML += `<div><strong>Xatbot:</strong> ${data.response}</div>`;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                })
+                .catch(error => {
+                    chatMessages.innerHTML += `<div><strong>Error:</strong> No s'ha pogut contactar amb el servidor.</div>`;
+                    console.error("Error:", error);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
