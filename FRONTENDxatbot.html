@@ -19,7 +19,7 @@
             overflow: hidden;
         }
         #chatbot-header {
-            background: #007bff;
+            background: #9535EB;
             color: white;
             padding: 10px;
             text-align: center;
@@ -40,7 +40,7 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: #007bff;
+            background: #9535EB;
             color: white;
             padding: 15px;
             border-radius: 50%;
@@ -48,16 +48,18 @@
             font-size: 20px;
             text-align: center;
         }
+}
+</script>
     </style>
 </head>
 <body>
-    <div id="chatbot-icon">💬</div>
+    <div id="chatbot-icon">🤖</div>
     <div id="chatbot-container">
-        <div id="chatbot-header">Xatbot</div>
-        <div id="chatbot-messages"></div>
-        <input type="text" id="chatbot-input" placeholder="Escriu un missatge...">
-    </div>
-
+    <div id="chatbot-header">Xatbot</div>
+    <div id="chatbot-messages"></div>
+    <input type="text" id="chatbot-input" placeholder="Escriu un missatge...">
+  <button onclick="location.reload();">Reiniciar</button>
+</div>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const chatIcon = document.getElementById("chatbot-icon");
@@ -67,7 +69,7 @@
             const chatInput = document.getElementById("chatbot-input");
 
             // URL del backend exposat amb ngrok
-            const API_URL = "https://783b-34-133-188-52.ngrok-free.app/chat"; // ⬅️ Substitueix per la teva URL de ngrok
+            const API_URL = "https://aac1-34-138-111-172.ngrok-free.app/chat"; // ⬅️ Substitueix per la teva URL de ngrok
 
             // Funció per obrir/tancar el xatbot
             function toggleChatbot() {
@@ -114,4 +116,3 @@
         });
     </script>
 </body>
-</html>
