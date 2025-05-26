@@ -1,4 +1,4 @@
-# Instal·lar les biblioteques necessàries
+# Instal·lació de les biblioteques necessàries
 !pip install -U flask flask-cors pyngrok google-genai requests beautifulsoup4
 
 from flask import Flask, request, jsonify
