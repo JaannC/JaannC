@@ -11,17 +11,17 @@ from google import genai
 import os
 
 
-########### CONFIGURACIÓ DE L'API ###########
+########### API ###########
 
 GOOGLE_API_KEY = "AIzaSyAa0FfHe2VLs8GueXZo16ajdQCEGC5TCzE"
 if not GOOGLE_API_KEY:
     raise ValueError("⚠️ No s'ha trobat la clau API. Configura-la abans d'executar el programa.")
 
-# Crear el client de GenAI amb la clau API
+# Creació del client de GenAI amb la clau API
 client = genai.Client(api_key=GOOGLE_API_KEY)
 
 
-########### WEB SCRAPING DE TOT EL DOMINI ###########
+########### WEB SCRAPING ###########
 
 BASE_URL = "https://jcanet.inscastellbisbal.net/"
 
@@ -63,7 +63,7 @@ def obtenir_contingut_domain(base_url, max_pagines=50):
             contingut_total += text + "\n"
         count += 1
 
-        # Trobar enllaços interns
+        # enllaços interns
         try:
             resposta = requests.get(url_actual)
             if resposta.status_code == 200:
@@ -79,17 +79,17 @@ def obtenir_contingut_domain(base_url, max_pagines=50):
 
     return contingut_total
 
-# Obtenir el contingut de tot el domini (subpàgines incloses)
+# Contingut del domini
 contingut_web = obtenir_contingut_domain(BASE_URL)
 print("Contingut extret (primeres 500 lletres):\n", contingut_web[:500], "...\n")
 
 
-########### CONFIGURACIÓ DE FLASK ###########
+########### CONF FLASK ###########
 
 app = Flask(__name__)
 CORS(app)  # Permet sol·licituds des de qualsevol origen (necessari per JavaScript)
 
-# Ruta per gestionar les sol·licituds del xatbot
+# Gestio de les sol·licituds del xatbot
 @app.route("/chat", methods=["POST"])
 def chat():
     try:
@@ -99,7 +99,7 @@ def chat():
         if not missatge_usuari:
             return jsonify({"response": "Si us plau, escriu alguna cosa!"})
 
-        # El xatbot només respon consultes relacionades amb el domini (reptes, institut, etc.)
+        # El xatbot unicament respon consultes relacionades amb el domini (reptes, institut, etc.)
         prompt_complet = f"Només respon preguntes sobre els reptes, els projectes i la informació de l'institut. {missatge_usuari}"
         resposta = client.chats.create(
             model="gemini-2.0-flash",
@@ -114,7 +114,7 @@ def chat():
     except Exception as e:
         return jsonify({"response": f"⚠️ Error en la comunicació amb Gemini: {e}"})
 
-########### EXPOSAR EL SERVIDOR AMB NGROK ###########
+########### SERVIDOR AMB NGROK ###########
 
 NGROK_AUTH_TOKEN = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ngrok.set_auth_token(NGROK_AUTH_TOKEN)
