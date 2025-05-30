@@ -1,19 +1,34 @@
 # 📌 Registre de Canvis
 
-## 🆕 [1.2.0] - 26-3-2025
+## 🆕 [1.3.0] - 2025-05-29
+
+### ✨ Millores
+
+  Missatge d'error clar si la clau API de Gemini no està definida
+
+
+
+## 📌 [1.2.1] - 2025-05-25
+
+### 🛠️ Corregit
+
+  Es descarten pàgines repetides durant el recorregut amb visited
+
+  
+
+## 📌 [1.2.0] - 2025-05-21
+
+### ✨ Millores
+
+  El xatbot ara contextualitza les preguntes amb una instrucció prèvia...
+
+  
+
+## 📌 [1.1.0] - 2025-05-16
 
 ### 🔥 Afegit
 
-- Nova funcionalitat X
-
-## 🛠️ Corregit
-
-- Error en la connexió API
-- Problema amb la base de dades
-
-📌 [1.1.0] - 13-3-2025
-
-🔥 Afegit: Xatbot Funcional ara en PHP funciona a la pagina web (jcanet.inscastellbisbal.net) 
+  Paràmetre max_pagines=50 afegit per limitar la profunditat del scraping
 
 
 ---------------------------------------------------------------------------
